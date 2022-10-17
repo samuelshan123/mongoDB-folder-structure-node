@@ -16,6 +16,7 @@ exports.create =async  (req, res) => {
 
 // Retrieve all Users from the database.
 exports.findAll = async (req, res) => {
+  console.log('im called');
   await  User.find().toArray((err,result)=>{
     if(err) throw err
     res.send(result)
