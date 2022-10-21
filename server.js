@@ -1,13 +1,22 @@
 const express = require("express");
 const cors = require("cors");
-const mongodb = require('mongodb')
-const MongoClient = mongodb.MongoClient
+const mongodb = require('mongodb');
+const { DB_URL } = require("./src/constants/constants");
+const MongoClient = mongodb.MongoClient;  
 const app = express();
-const url= "mongodb://localhost:27017"
-
+const hbs = require('hbs')
+const path =require('path')
 var corsOptions = {
   origin: "*"
 };
+
+app.set('views',path.join(__dirname,'./src/views'))
+
+const location = path.join(__dirname,'./src/public')
+const partialsPath =path.join(__dirname,'./src/views/partials')
+hbs.registerPartials(partialsPath)
+app.use(express.static(location));
+app.set('view engine','hbs');
 
 app.use(cors(corsOptions));
 
@@ -19,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // const db = require("./app/models");
 MongoClient
-  .connect(url, {
+  .connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -36,13 +45,17 @@ MongoClient
     process.exit();
   });
 
-// simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to node application." });
+  // res.json({ message: "Welcome to node application." });
+  let appname='sovergin'
+  res.render('welcome',{appname})
+  // res.send('welcome')
+
 });
 
 function initRouter(){
-  require("./app/routes/user.routes")(app);
+  require("./src/routes/user.routes")(app);
+  require("./src/routes/template.routes")(app)
 
 }
 // set port, listen for requests
