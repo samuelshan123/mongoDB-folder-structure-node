@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGP</title>
+    <link rel="stylesheet" href="/css/pgp.styles.css">
+    {{!-- <script src="/scripts/script.js"></script> --}}
+    {{!-- <script src="https://cdn.jsdelivr.net/npm/openpgp@5.5.0/dist/openpgp.min.js"></script> --}}
+</head>
+<body>
+
+    <div class="card">
+
+           <div class="img">
+            <img src="/assets/message.png" height="60px" width="60px"></img>
+           </div>
+        <form  method="post" action="/encryptFormData" >
+            <label for="pgp_fingerprint">PGP Fingerprint</label>
+            <textarea name="pgp_fingerprint"  placeholder="PGP Fingerprint" rows="5"  required>{{result.cir.pub}}</textarea>
+            <label for="name">Name</label>
+            <input name="name" type="text" placeholder="Name" id="name" required>
+            {{!-- <label>My Email</label>
+            <input type="email" placeholder="My Email" id="email"> --}}
+            <label for="message">Message</label>
+            <textarea name="message"  id="message" rows="5" placeholder="Message" required></textarea>
+              <button id="encrypt" type="submit">Encrypt & Send</button>
+        </form>
+    </div>
+{{!-- 
+    <div class="card">
+        <form>
+            <textarea name="" id="encrypted_message" cols="30" placeholder="Encrypted message" rows="5"></textarea>
+              <button id="decrypt">Decrypt</button>
+        </form>
+
+        <div id="output">
+            <p id="d_name"></p>
+            <p id="d_email"></p>
+            <p id="d_message"></p>
+        </div>
+    </div> --}}
+    
+</body>
+</html>

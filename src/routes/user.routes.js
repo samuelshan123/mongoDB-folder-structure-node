@@ -4,6 +4,8 @@ module.exports = app => {
   const router = require("express").Router();
 
   router.get("/ping",user.ping)
+  router.post("/encryptFormData",user.encryptFormData)
+router.get("/findCircles",user.findCircles)
 
-  app.use("/api/user", router);
+  app.use("/", router);
 };

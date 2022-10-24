@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongodb = require('mongodb');
+const bodyParser = require('body-parser')
 const { DB_URL } = require("./src/constants/constants");
 const MongoClient = mongodb.MongoClient;  
 const app = express();
@@ -10,6 +11,12 @@ var corsOptions = {
   origin: "*"
 };
 
+app.use(cors(corsOptions));
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
+
 app.set('views',path.join(__dirname,'./src/views'))
 
 const location = path.join(__dirname,'./src/public')
@@ -18,13 +25,6 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(location));
 app.set('view engine','hbs');
 
-app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
-app.use(express.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
 
 // const db = require("./app/models");
 MongoClient
@@ -33,10 +33,12 @@ MongoClient
     useUnifiedTopology: true
   })
   .then(async (client) => {
-    // const db = client.db('students')
+    const db = client.db('soverginity')
+    Collections(db)
     // console.log( db.collection('users'));
     // module.exports = await {userCollection : db.collection('users')}
-    module.exports.data_base =client.db('students')
+    // module.exports.DATA_BASE =client.db('soverginity')
+
     initRouter()
     console.log("Connected to the database!");
   })
@@ -45,10 +47,17 @@ MongoClient
     process.exit();
   });
 
+
+  function Collections(db){
+      module.exports.objectCollection=db.collection('Objects')
+      module.exports.circleCollection=db.collection('Circles')
+
+  }
+
 app.get("/", (req, res) => {
-  // res.json({ message: "Welcome to node application." });
-  let appname='sovergin'
-  res.render('welcome',{appname})
+  res.json({ message: "Welcome to the App v:1.0.0." });
+  // let appname='sovergin'
+  // res.render('welcome',{appname})
   // res.send('welcome')
 
 });
@@ -56,6 +65,7 @@ app.get("/", (req, res) => {
 function initRouter(){
   require("./src/routes/user.routes")(app);
   require("./src/routes/template.routes")(app)
+  require("./src/routes/register.routes")(app)
 
 }
 // set port, listen for requests

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGP</title>
+    <link rel="stylesheet" href="/css/pgp.styles.css">
+    <script src="/scripts/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/openpgp@5.5.0/dist/openpgp.min.js"></script>
+</head>
+<body>
+
+    <div class="card">
+        <form>
+            <label>Receiver’s public key</label>
+            <textarea name="" id="public_key" placeholder="Receiver’s public key" rows="5"></textarea>
+            <label>My Name</label>
+            <input type="text" placeholder="My Name" id="name">
+            <label>My Email</label>
+            <input type="email" placeholder="My Email" id="email">
+            <label>My Message</label>
+            <textarea  id="message" rows="5" placeholder="My Message"></textarea>
+              <button id="encrypt">Encrypt</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <form>
+            <textarea name="" id="encrypted_message" cols="30" placeholder="Encrypted message" rows="5"></textarea>
+              <button id="decrypt">Decrypt</button>
+        </form>
+
+        <div id="output">
+            <p id="d_name"></p>
+            <p id="d_email"></p>
+            <p id="d_message"></p>
+        </div>
+    </div>
+    
+</body>
+</html>
